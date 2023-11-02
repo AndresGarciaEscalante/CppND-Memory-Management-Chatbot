@@ -11,7 +11,7 @@ GraphNode::~GraphNode()
     //// STUDENT CODE
     ////
 
-    delete _chatBot; 
+    //delete _chatBot; This line of code seems to not have a purpose
 
     ////
     //// EOF STUDENT CODE
