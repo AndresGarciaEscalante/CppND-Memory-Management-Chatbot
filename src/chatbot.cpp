@@ -51,18 +51,23 @@ ChatBot::ChatBot(const ChatBot& source){
     
     this->_image = new wxBitmap();
     this->_image = source._image;
-    this->_chatLogic = nullptr;
-    this->_rootNode = nullptr;
+    this->_chatLogic = source._chatLogic;
+    this->_rootNode = source._rootNode;
+    this->_currentNode = source._currentNode;
 }
 
 // Rule 3: Copy Assignment Operator         
 ChatBot& ChatBot::operator=(const ChatBot& source){
     std::cout << "ChatBot Copy Assignment Operator" << std::endl;
+    if (this == &source) {
+        return *this;
+    }
+
     delete this->_image;
-    this->_image = new wxBitmap();
-    this->_image = source._image;
-    this->_chatLogic = nullptr;
-    this->_rootNode = nullptr;
+    this->_image = new wxBitmap(*source._image);
+    this->_chatLogic = source._chatLogic;
+    this->_rootNode = source._rootNode;
+    this->_currentNode = source._currentNode;
     return *this;
 }
 
@@ -72,22 +77,34 @@ ChatBot::ChatBot(ChatBot&& source){
     this->_image = source._image;
     this->_chatLogic = source._chatLogic;
     this->_rootNode = source._rootNode;
+    this->_currentNode = source._currentNode;
+    _chatLogic->SetChatbotHandle(this);
     source._image = nullptr;
     source._chatLogic = nullptr;
     source._rootNode = nullptr;
-}                 
+    source._currentNode = nullptr;
+}      
 
 // Rule 5: Move Assignment Operator
 ChatBot& ChatBot::operator=(ChatBot&& source){
     std::cout << "ChatBot Move Assignment Operator" << std::endl;
-    delete this->_image;
-    this->_image = new wxBitmap();
-    this->_image = source._image;
-    this->_chatLogic = nullptr;
-    this->_rootNode = nullptr;
+    if (this == &source)
+        return *this;
 
+    delete this->_image;
+    this->_image = source._image;
+    this->_chatLogic = source._chatLogic;
+    this->_rootNode = source._rootNode;
+    this->_currentNode = source._currentNode;
+    _chatLogic->SetChatbotHandle(this);
+    source._image = nullptr;
+    source._chatLogic = nullptr;
+    source._rootNode = nullptr;
+    source._currentNode = nullptr;
+    
     return *this;
 }     
+///
 ////
 //// EOF STUDENT CODE
 
